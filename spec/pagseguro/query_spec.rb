@@ -9,10 +9,10 @@ describe PagSeguro::Query do
   it { should respond_to(:transaction) }
 
   before do
-    PagSeguro.email = 'mail'
-    PagSeguro.token = 'token'
-    PagSeguro.alt_email = 'alt_mail'
-    PagSeguro.alt_token = 'alt_token'
+    PagSeguro.config.email = 'mail'
+    PagSeguro.config.token = 'token'
+    PagSeguro.config.alt_email = 'alt_mail'
+    PagSeguro.config.alt_token = 'alt_token'
   end
 
   describe "#transaction" do

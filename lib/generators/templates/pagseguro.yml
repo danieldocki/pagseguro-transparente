@@ -1,0 +1,14 @@
+development: &development
+  adapter_javascript_url: "https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
+  email: "exemplo@pagseguro.com.br"
+  token: "token válido"
+  environment: "sandbox"
+
+test:
+  <<: *development
+
+production:
+  adapter_javascript_url: "https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
+  email: "exemplo@pagseguro.com.br"
+  token: "token válido"
+  environment: "production"

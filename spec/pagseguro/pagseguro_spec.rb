@@ -2,14 +2,14 @@ require "spec_helper"
 
 describe PagSeguro do
   before do
-    PagSeguro.email = "EMAIL"
-    PagSeguro.token = "TOKEN"
-    PagSeguro.timeout = 10
+    PagSeguro.config.email = "EMAIL"
+    PagSeguro.config.token = "TOKEN"
+    PagSeguro.config.timeout = 10
   end
 
-  it { expect(PagSeguro.email).to eql("EMAIL") }
-  it { expect(PagSeguro.token).to eql("TOKEN") }
-  it { expect(PagSeguro.timeout).to eql(10) }
+  it { expect(PagSeguro.config.email).to eql("EMAIL") }
+  it { expect(PagSeguro.config.token).to eql("TOKEN") }
+  it { expect(PagSeguro.config.timeout).to eql(10) }
 
   context "configuring library" do
     it "yields PagSeguro" do
@@ -20,7 +20,7 @@ describe PagSeguro do
   end
 
   context "default settings" do
-    it { expect(PagSeguro.environment).to eql(:production) }
+    it { expect(PagSeguro.config.environment).to eql(:production) }
   end
 
   describe ".api_url" do
@@ -30,7 +30,7 @@ describe PagSeguro do
       end
 
       context "sandbox" do
-        before { PagSeguro.environment = :sandbox }
+        before { PagSeguro.config.environment = :sandbox }
         it { expect(PagSeguro.api_url(PagSeguro::Request::API_V2)).to eq('https://ws.sandbox.pagseguro.uol.com.br/v2') }
       end
     end
@@ -41,7 +41,7 @@ describe PagSeguro do
       end
 
       context "sandbox" do
-        before { PagSeguro.environment = :sandbox }
+        before { PagSeguro.config.environment = :sandbox }
         it { expect(PagSeguro.api_url(PagSeguro::Request::API_V3)).to eq('https://ws.sandbox.pagseguro.uol.com.br/v3') }
       end
     end

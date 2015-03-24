@@ -25,12 +25,50 @@ gem "pagseguro-transparente", "~> 0.2.3"
 ~~~
 * Ainda não publicada, é preciso baixar direto do Github.
 
-Criar um initializer em config/initializer/pagseguro.rb
+###**PagSeguro** suporta dois métodos de configurações.
+
+####Rails Initializer
+~~~.ruby
+rails g pagseguro:install
+~~~
+
+O generator vai criar o Rails initializer em config/initializers/pagseguro.rb.
 ~~~.ruby
 PagSeguro.configure do |config|
-    config.email = "exemplo@pagseguro.com.br"
-    config.token = "token válido"
+  config.environment            = :sandbox
+  config.adapter_javascript_url = "https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
+  config.email                  = "exemplo@pagseguro.com.br"
+  config.token                  = "token válido"
 end
+~~~
+
+####Ou por YAML
+~~~.ruby
+rails g pagseguro:install --use-yml
+~~~
+
+O generator vai criar o YAML em config/pagseguro.yml.
+~~~.yaml
+development: &development
+  adapter_javascript_url: "https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
+  email: "exemplo@pagseguro.com.br"
+  token: "token válido"
+  environment: "sandbox"
+
+test:
+  <<: *development
+
+production:
+  adapter_javascript_url: "https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
+  email: "exemplo@pagseguro.com.br"
+  token: "token válido"
+  environment: "production"
+~~~
+
+
+####Adicione ao seu application layout
+~~~
+<%= javascript_include_tag PagSeguro.adapter_javascript_url %>
 ~~~
 
 ##Criando uma nova sessão

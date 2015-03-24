@@ -75,8 +75,8 @@ describe PagSeguro::Payment::Serializer do
   end
 
   before do
-    PagSeguro.email = 'pagseguro@eventick.com.br'
-    PagSeguro.token = 'my_token'
+    PagSeguro.config.email = 'pagseguro@eventick.com.br'
+    PagSeguro.config.token = 'my_token'
   end
 
   let(:bank) { PagSeguro::Bank.new('bancodobrasil') }

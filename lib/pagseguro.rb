@@ -1,4 +1,5 @@
 require "active_model"
+require "config"
 require "pagseguro/version"
 require "pagseguro/request"
 require "pagseguro/session"
@@ -34,27 +35,24 @@ I18n.load_path += Dir[File.expand_path('../../config/locales/*.yml',  __FILE__)]
 
 module PagSeguro
   class << self
-    # Primary e-mail associated with the primary account.
-    attr_accessor :email
+    def config=(data)
+      @config = data
+    end
 
-    # The API token associated with primary account.
-    attr_accessor :token
+    def config
+      @config ||= Config.new
+    end
 
-    # Sencondary e-mail associated with secondary account.
-    attr_accessor :alt_email
+    def configure(&block)
+      yield config
+    end
 
-    # The API token associated with secondary account.
-    attr_accessor :alt_token
-
-    # The PagSeguro environment.
-    # Only +production+ for now.
-    attr_accessor :environment
-
-    # Timeout value in seconds for requests.
-    attr_accessor :timeout
+    def adapter_javascript_url
+      config.adapter_javascript_url
+    end
 
     def api_url(version)
-      uris.fetch(environment) + version
+      uris.fetch(config.environment) + version
     end
 
     private
@@ -66,7 +64,7 @@ module PagSeguro
     end
   end
 
-  self.environment = :production
+  self.config.environment = :production
 
   # Set the global configuration.
   #
@@ -75,8 +73,4 @@ module PagSeguro
   #     config.token = "abc"
   #     config.environment = :sandbox
   #   end
-  #
-  def self.configure(&block)
-    yield self
-  end
 end

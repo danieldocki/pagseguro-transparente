@@ -5,8 +5,8 @@ describe PagSeguro::Session do
   subject { session }
 
   before do
-    PagSeguro.email = 'mail'
-    PagSeguro.token = 'token'
+    PagSeguro.config.email = 'mail'
+    PagSeguro.config.token = 'token'
   end
 
   it { should respond_to(:create) }
